@@ -11,6 +11,7 @@ public class Client{
             socket=new Socket(address,port);
             System.out.println("Connected!!");
             reader=new BufferedReader(new InputStreamReader(socket.getInputStream()));
+
             printWriter=new PrintWriter(socket.getOutputStream(),true);
         } catch (IOException e) {
             System.out.println(e.getMessage());

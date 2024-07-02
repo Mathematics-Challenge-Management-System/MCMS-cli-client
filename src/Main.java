@@ -23,30 +23,48 @@ public class Main {
 
 
         client.establish("127.0.0.1", 3333);
-//        Main.welcome();
         consoleReader = new BufferedReader(new InputStreamReader(System.in));
         System.out.println("\n------------------\nWelcome to the MCMS");
         System.out.println("--------------------\n");
+        welcome();
 
-        System.out.println("""
+
+    }
+
+     static void welcome() {
+         System.out.println("""
                 Re-write the following commands in the terminal to perform the actions
                 Replace the square brackets with the actual values
                                 
                 Here are the available options:
 
-                register [username] [firstname] [lastname] [emailAddress] [date_of_birth] [school_registration_number] [image_file.png]
+                register [username] [firstname] [lastname] [emailAddress] [password] [date_of_birth] [school_registration_number] [image_file.png]
                 login [username] [password]""");
 
-        System.out.println("Enter command: ");
-        String command = null;
-        try {
-            command = consoleReader.readLine();
+         System.out.println("Enter command: ");
+         String command = null;
+         try {
+             command = consoleReader.readLine();
 
-            client.printWriter.println(command);
-            client.reader.readLine();
-        } catch (IOException e) {
-            e.getMessage();
-        }
+             client.printWriter.println(command);
+             String response = client.reader.readLine();
+             System.out.println(response);
+             response = client.reader.readLine();
+             if(!response.equalsIgnoreCase("valid command")){
+                 System.out.println("\n----------------------------\n"+response+"\n----------------------------\n");
+                 welcome();
+             }
+             else{
+                 System.out.println("""
+                         Command sent successfully
+                         Wait for confirmation email then log in
+                         """);
+
+
+             }
+         } catch (IOException e) {
+             e.getMessage();
+         }
     }
 
 
