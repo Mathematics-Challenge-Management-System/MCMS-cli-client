@@ -6,7 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="21b6902d-2d79-4c21-9967-4791fa2411c7" name="Changes" comment="created client">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Client.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -79,7 +78,7 @@
       <updated>1719864424973</updated>
       <workItem from="1719864425749" duration="2000" />
       <workItem from="1719864460190" duration="185000" />
-      <workItem from="1719864685397" duration="9914000" />
+      <workItem from="1719864685397" duration="28533000" />
     </task>
     <task id="LOCAL-00001" summary="created client">
       <option name="closed" value="true" />
