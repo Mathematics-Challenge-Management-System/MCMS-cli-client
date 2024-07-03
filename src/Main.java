@@ -47,31 +47,47 @@ public class Main {
              command = consoleReader.readLine();
 
              client.printWriter.println(command);
-             String response = client.reader.readLine();
-             System.out.println(response);
+             String response;
              response = client.reader.readLine();
+//             System.out.println("\n"+response+"\n");
 
-             switch (response) {
+             switch (response.strip().split(" ")[0]) {
 
-                 case "valid register":
-                     System.out.println( "\n----------\nCommand sent successfully. Wait for confirmation email then log in");
-                     welcome();
+                 case "valid":
+//                     System.out.println("in valid");
+                     if (response.split(" ")[1].equalsIgnoreCase("register")){
+                     System.out.println( "\n----------\nCommand sent successfully. Wait for confirmation email then log in\n----------\n");
+//                     welcome();
+//                     break;
+                     }else {
+                         System.out.println(  "\n----------\nValid login details\n----------\n");
+                         response = client.reader.readLine();
+                         if (response.split(" ")[0].equalsIgnoreCase("representative")) rep(response);
+                         else if (response.split(" ")[0].equalsIgnoreCase("participant")) participant(response);
+                         else {
+                             System.out.println( "\n----------\nUser not found\n----------\n");
+//                             welcome();
+//                             break;
+                         }
+                     }
+
                      break;
-                 case "valid login":
-                     System.out.println(  "\n----------\nValid login details");
-                     response = client.reader.readLine();
-                     if (response.split(" ")[0].equalsIgnoreCase("representative")) rep(response);
-                     else if (response.split(" ")[0].equalsIgnoreCase("participant")) participant(response);
-                     else {
-                         System.out.println(response + "\n----------\nInvalid command");
+                 case "invalid":
+                     if (response.split(" ")[1].equalsIgnoreCase("school")) {
+                         System.out.println( "\n----------\nSchool registration number does not exist\n----------\n");
+                         welcome();
+                     } else if (response.split(" ")[1].equalsIgnoreCase("values")) {
+                         System.out.println( "\n----------\nIncomplete command. please enter all the required fields\n----------\n");
                          welcome();
                      }
-                 case "invalid":
-                     System.out.println(response + "\n----------\nInvalid command");
-                     welcome();
+                     else {
+                         System.out.println( "\n----------\nFailed to register\n----------\n");
+                         welcome();
+                     }
+
                      break;
                     default:
-                        System.out.println(response + "\n----------\nInvalid command");
+                        System.out.println( "\n----------\nInvalid command\n----------\n");
                         welcome();
                         break;
              }
@@ -111,23 +127,25 @@ public class Main {
 
     private static void rep(String response) {
 
-            while ( true){
+
                 try {
+                    while (!Objects.equals(response = client.reader.readLine(), "done")){
+                        System.out.println("something");
                 System.out.println("---------\nHello "+response.split(" ")[1]);
-                response=client.reader.readLine();
-                if (response==null)     {    welcome();break;}
+
+
                 System.out.println("\n Enter 'yes' to confirm or 'no' to reject participant details\n-----*******-------\n");
 
                 System.out.println(response);
                 choice=consoleReader.readLine();
                 client.printWriter.println(choice);
-
-
+                    }
+    welcome();
             }catch (IOException e) {
                     e.printStackTrace();
                 }
 
-        }
+
 
     }
 
