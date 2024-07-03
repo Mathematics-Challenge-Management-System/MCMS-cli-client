@@ -54,11 +54,11 @@ public class Main {
              switch (response) {
 
                  case "valid register":
-                     System.out.println(response + "\n----------\nCommand sent successfully. Wait for confirmation email then log in");
+                     System.out.println( "\n----------\nCommand sent successfully. Wait for confirmation email then log in");
                      welcome();
                      break;
                  case "valid login":
-                     System.out.println(response + "\n----------\nValid login details");
+                     System.out.println(  "\n----------\nValid login details");
                      response = client.reader.readLine();
                      if (response.split(" ")[0].equalsIgnoreCase("representative")) rep(response);
                      else if (response.split(" ")[0].equalsIgnoreCase("participant")) participant(response);
@@ -113,7 +113,7 @@ public class Main {
 
             while ( true){
                 try {
-//                System.out.println("---------\nHello "+response.split(" ")[1]);
+                System.out.println("---------\nHello "+response.split(" ")[1]);
                 response=client.reader.readLine();
                 if (response==null)     {    welcome();break;}
                 System.out.println("\n Enter 'yes' to confirm or 'no' to reject participant details\n-----*******-------\n");
