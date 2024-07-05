@@ -21,11 +21,10 @@ public class Main {
 //    int port=scanner.nextInt();
 //
 
-
+// to establish a connection
         client.establish("127.0.0.1", 3333);
         consoleReader = new BufferedReader(new InputStreamReader(System.in));
-        System.out.println("\n------------------\nWelcome to the MCMS");
-        System.out.println("--------------------\n");
+        System.out.println("\n------------------\nWelcome to the MCMS\n--------------------\n");
         welcome();
 
 
@@ -45,7 +44,7 @@ public class Main {
     public static boolean isValidCommand(String command) {
         return command.equalsIgnoreCase("login") || command.equalsIgnoreCase("register");
     }
-
+    //method to display instructions to the user
      static void welcome() {
          System.out.println("""
                  Re-write the following commands in the terminal to perform the actions
@@ -62,7 +61,7 @@ public class Main {
          String command = null;
          try {
              command = consoleReader.readLine();
-
+//method to show the status of a command entered by the user
              if (!isValidCommand(command.strip().split(" ")[0])) {
                  System.out.println("\n----------\nInvalid command\n----------\n");
                  welcome();
