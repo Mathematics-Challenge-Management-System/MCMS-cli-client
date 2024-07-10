@@ -117,8 +117,11 @@ public class Main {
                          } else {
 //                             System.out.println("\n----------\nValid login details\n----------\n");
                              response = client.reader.readLine();
-                             System.out.println(response);
-                             if (response.strip().split(" ")[0].equalsIgnoreCase("representative")) rep(response);
+                             if (response.strip().split(" ")[0].equalsIgnoreCase("representative")){
+                                 System.out.println("Hello "+response.split(" ")[1].toUpperCase()+"\n*************Confirm participant****************");
+
+                                 rep(response);
+                             }
                              else if (response.strip().split(" ")[0].equalsIgnoreCase("participant")) participant(response);
                              else {
                                  System.out.println("\n----------\nUser not found\n----------\n");
@@ -172,8 +175,8 @@ public class Main {
                 try {
                     while (!Objects.equals(response = client.reader.readLine(), "done")) {
                         System.out.println("--------\nConfirm participant.\n---------");
-
-                     System.out.println("Hello "+response.split(" ")[1]);
+                        String[] participantDetails = response.strip().split(" ");
+                     System.out.println("Name : "+participantDetails[1].toUpperCase()+" "+participantDetails[2].toUpperCase()+"\nEmail : "+participantDetails[3]+"\nDate of Birth : "+participantDetails[5]+"\nSchool Registration Number : "+participantDetails[6]+"\n");
                      client.printWriter.println( getResponse());
                     }
                     System.out.println("\n***********\nThere are no more participants to validate\n***********\n");
