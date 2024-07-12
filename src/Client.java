@@ -5,7 +5,7 @@ public class Client{
     protected PrintWriter printWriter=null;
     private Socket socket=null;
 
-
+//method to establish connection with the server
     public void establish(String address,int port){
         try {
             socket=new Socket(address,port);
@@ -17,8 +17,9 @@ public class Client{
             System.out.println(e.getMessage());
         }
     }
+    //method to close the connection
     public void close(){
-        try {
+        try{
             socket.close();
             reader.close();
             printWriter.close();

@@ -5,12 +5,12 @@ public class Participant {
     private String email;
     private int schoolRegNo;
     private int phone;
-
+// methods to get and set the participant details
     public int getParticipantId() {
         return participantId;
     }
 
-    public void setParticipantId(int participantId) {
+public void setParticipantId(int participantId) {
         this.participantId = participantId;
     }
 
