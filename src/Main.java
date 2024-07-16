@@ -19,8 +19,6 @@ public class Main {
         consoleReader = new BufferedReader(new InputStreamReader(System.in));
         System.out.println("\n------------------\nWelcome to the MCMS\n--------------------\n");
         welcome();
-
-
     }
 // a method to check that the email is valid
     public static boolean isValidEmail(String email) {
@@ -47,8 +45,8 @@ public class Main {
                  Start with the register command then replace the square brackets with the actual values
                  The user name should br unique
                  The date should be in the format yyyy-mm-dd
-                 The image file sshould be in png format
-                 login is done after registration and the username and passwor should be the same as the ones used in registration
+                 The image file should be in png format
+                 login is done after registration and the username and password should be the same as the ones used in registration
                 
                  
 
@@ -58,22 +56,20 @@ public class Main {
          System.out.println("Enter command: ");
          String[] command = null;
          try {
-            command = consoleReader.readLine().split(" ");
-
-            if (!isValidCommand(command[0].strip())) {
-                 System.out.println(" Invalid command .Please re-read the instructions and try again ");
+             String commandString=consoleReader.readLine();
+             command = commandString.strip().split(" ");
+             if (!isValidCommand(command[0])) {
+                 System.out.println("\n----------\nInvalid command \n Expected login or register\n----------\n");
                  welcome();
              }
-
              switch (command[0].toLowerCase()){
-
                  case "register":
                      if (command.length < 9) {
                          System.out.println("\n----------\nIncomplete command. please enter all the required fields and try again\n----------\n");
                          welcome();
                      } else if ( command.length > 9) {
                          System.out.println("\n Too many fields.please re- read the instructions and try again");
-                    
+
                          welcome();
                      }else if ( !command[8].contains(".png")) {
                         System.out.println("\n----------\nInvalid image file path\nPlease ensure that the image file format is png\n----------\n");
@@ -97,21 +93,16 @@ public class Main {
                      }
                      break;
              }
-
-
-//server communication
-                client.printWriter.println(command);
+                 client.printWriter.println(commandString);
                  String response;
                  response = client.reader.readLine();
                 String[] responseArray = response.strip().split(" ");
                  switch (response.strip().split(" ")[0]) {
-
                      case "valid":
                          if (responseArray[1].equalsIgnoreCase("register")) {
                              System.out.println("\n----------\nRegister command sent successfully. Wait for confirmation email then log in\n----------\n");
                              welcome();
-//                     break;
-                         } else {
+                         } else if (responseArray[1].equalsIgnoreCase("login")){
                              response = client.reader.readLine();
                              if (response.strip().split(" ")[0].equalsIgnoreCase("representative")){
                                 System.out.println("Hello "+response.split(" ")[1].toUpperCase()+"\n*************Confirm participant****************");
@@ -122,16 +113,11 @@ public class Main {
                              else {
                                  System.out.println("\n----------\nUser not found\n----------\n");
                                  welcome();
-//                             break;
                              }
                          }
-
                          break;
                          //incase of invalid input
                      case "invalid":
-                     if ( responseArray.length> 1){
-
-                     
                          if (responseArray[1].equalsIgnoreCase("school")) {
                              System.out.println("\n----------\nSchool registration number does not exist.\n Please enter the right school registration number\n----------\n");
                              welcome();
@@ -151,7 +137,6 @@ public class Main {
                              System.out.println("\n----------\nFailed to register.Please follow the instructions and try again\n----------\n");
                              welcome();
                          }
-                        }
 
                          break;
                      default:
@@ -163,31 +148,184 @@ public class Main {
                  e.getMessage();
              }
          }
-
-
     private static void participant(String response) {
+        System.out.println("\nHello "+response.split(" ")[1].toUpperCase()+"\n*****************************");
+        try {
+            String command=enterCommand().strip();
+            client.printWriter.println(command);
+            String response1;
+            switch (command) {
+                case "view challenges":
+                     response1 = client.reader.readLine();
+                    if (response1.equalsIgnoreCase("no challenges")) {
+                        System.out.println("\n***********\nThere are no challenges available\n***********\n");
+                        participant(response);
+                        break;
+                    } else {
+                        System.out.println("\n*********** These are the available challenges ***********\n");
+                        while (!Objects.equals(response1, "done")) {
+                            System.out.println(response1);
+                            response1 = client.reader.readLine();
+                        }
+                        participant(response);
+
+                    }
+                    break;
+                case "attempt challenge":
+                    response1 = client.reader.readLine();
+                    if (response1.equalsIgnoreCase("no challenges")) {
+                        System.out.println("\n***********\nThere are no challenges available\n***********\n");
+                        participant(response);
+                        break;
+                    } else {
+                        System.out.println("\n*********** These are the available challenges ***********\n");
+                        while (!Objects.equals(response1, "done")) {
+                            System.out.println(response1);
+                            response1 = client.reader.readLine();
+                        }
+                        System.out.println("\n***********\nEnter a challenge name to attempt\n***********\n");
+                        String challengeName = scanner.nextLine();
+
+                        client.printWriter.println(challengeName);
+                        System.out.println("************\n");
+                        while(!Objects.equals(response1 = client.reader.readLine(), "done")){
+                            if (response1.equalsIgnoreCase("invalid challenge")) {
+                                System.out.println("\nInvalid challenge name\n***********\n");
+                                participant(response);
+                            } else {
+                                System.out.println(response1);
+                            }
+                        }
+                        choice = startOrBack();
+                        if (choice.strip().equalsIgnoreCase("start")) {
+                            client.printWriter.println("start");
+                            System.out.println("\n************");
+                            while (!Objects.equals(response1 = client.reader.readLine(), "done")){
+                                if(Objects.equals(response1, "Time is up!!"))
+                                {
+
+                                    System.out.println("************\n"+response1);
+                                    continue;
+                                }
+                                System.out.println("\n--------------------------\n"+response1+"\nQuestion:");
+                                response1=client.reader.readLine();
+                                System.out.println(response1);
+                                System.out.println("\nSolution:");
+                                choice=scanner.nextLine();
+                                client.printWriter.println(choice);
 
 
+                            }
+                            System.out.println("************\n"+client.reader.readLine());
+                            System.out.println("Thank you for participating\n************");
+                            participant(response);
+
+                        } else if (choice.strip().equalsIgnoreCase("back")) {
+                            System.out.println("back");
+                            client.printWriter.println("back");
+                            participant(response);
+                        } else {
+                            System.out.println("\nInvalid command\n***********");
+                            participant(response);
+                        }
+//                        System.out.println(response1);
+                        participant(response);
+                    }
+                    break;
+                case "logout":
+                    System.out.println("\n***********\nGoodbye\n***********\n");
+                    client.printWriter.println("exit");
+                    welcome();
+                    break;
+                default:
+                    System.out.println("\n----------\nInvalid command\n Expected view challenges or attempt challenge or exit\n----------\n");
+                    participant(response);
+            }
+
+
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static String startOrBack() {
+        String choice;
+        do {
+            System.out.println("\n-----------------------\nEnter 'start' to start the challenge or 'back' to go back");
+            choice=scanner.nextLine();
+            if(!(choice.strip().equalsIgnoreCase("start") || choice.strip().equalsIgnoreCase("back"))){
+                System.out.println("\nInvalid command\n***********");
+
+            }
+        }while (!(choice.strip().equalsIgnoreCase("start") || choice.strip().equalsIgnoreCase("back")));
+
+
+        return choice;
+    }
+    //a method to take
+
+    private static String chooseChallenge() {
+        System.out.println("\n***********\nEnter a challenge name to attempt\n***********\n");
+        return scanner.nextLine();
+
+    }
+
+    private static String enterCommand() throws IOException {
+        System.out.println("""
+                Enter one of the following commands:
+                view challenges
+                attempt challenge 
+                logout
+                """);
+        System.out.println("Enter command: ");
+        String command =scanner.nextLine();
+        if (!command.equalsIgnoreCase("view challenges") && !command.equalsIgnoreCase("attempt challenge") && !command.equalsIgnoreCase("logout")) {
+
+            System.out.println("""
+                                     Invalid command
+                    -----------------------------------------------------------
+                     Expected 'view challenges' , 'attempt challenge' or 'exit'
+                                *****************************
+                    """);
+            command=enterCommand();
+
+        }
+
+        return command;
     }
 
     private static void rep(String response) {
-
-
-                try {
-                    while (!Objects.equals(response = client.reader.readLine(), "done")) {
-                        System.out.println("--------\nConfirm participant.\n---------");
-                        String[] participantDetails = response.strip().split(" ");
-                     System.out.println("Name : "+participantDetails[1].toUpperCase()+" "+participantDetails[2].toUpperCase()+"\nEmail : "+participantDetails[3]+"\nDate of Birth : "+participantDetails[5]+"\nSchool Registration Number : "+participantDetails[6]+"\n");
-                     client.printWriter.println( getResponse());
-                    }
-                    System.out.println("\n***********\nThere are no more participants to validate\n***********\n");
-                 welcome();
-                }catch (IOException e) {
-                    e.printStackTrace();
+        System.out.println("""
+                                      -------------
+                Enter 'yes' to Confirm participants and 'no' to go back.
+                                       -------------
+                """
+        );
+        choice=scanner.nextLine();
+        if (choice.strip().equalsIgnoreCase("yes")) {
+            client.printWriter.println("yes");
+            try {
+                while (!Objects.equals(response = client.reader.readLine(), "done")) {
+                    String[] participantDetails = response.strip().split(" ");
+                    System.out.println("Name : "+participantDetails[1].toUpperCase()+" "+participantDetails[2].toUpperCase()+"\nEmail : "+participantDetails[3]+"\nDate of Birth : "+participantDetails[5]+"\nSchool Registration Number : "+participantDetails[6]+"\n");
+                    client.printWriter.println( getValidationResponse());
                 }
+                System.out.println("\n***********\nThere are no more participants to validate\n***********\n");
+                welcome();
+            }catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else if (choice.strip().equalsIgnoreCase("no")) {
+            client.printWriter.println("no");
+            welcome();
+        } else {
+            System.out.println("\n----------\nInvalid response\n----------\n");
+            rep(response);
+
+        }
     }
     // get response from rep ensuring that it is either yes or no
-    private static String getResponse() {
+    private static String getValidationResponse() {
         try {
 
             System.out.println("\n-----*******-------\n Enter 'yes' to confirm or 'no' to reject participant details\n-----*******-------\n");
@@ -195,7 +333,7 @@ public class Main {
             choice = consoleReader.readLine().strip();
             if (!(choice.equalsIgnoreCase("yes") || choice.equalsIgnoreCase("no"))){
                 System.out.println("\n-----*******-------\nInvalid response!!Expected yes or no \n-----*******-------\n");
-                getResponse();
+                getValidationResponse();
             }
         } catch (IOException e) {
             e.printStackTrace();
