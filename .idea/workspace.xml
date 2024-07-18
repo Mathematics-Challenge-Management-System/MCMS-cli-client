@@ -5,11 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="21b6902d-2d79-4c21-9967-4791fa2411c7" name="Changes" comment="ensured that wrong values are not entered in the system">
-      <change afterPath="$PROJECT_DIR$/MCMS-cli-client.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -92,7 +88,10 @@
       <workItem from="1719994342306" duration="58476000" />
       <workItem from="1720422979037" duration="31902000" />
       <workItem from="1720515399093" duration="37014000" />
-      <workItem from="1720722361530" duration="15181000" />
+      <workItem from="1720722361530" duration="17764000" />
+      <workItem from="1721130622174" duration="1254000" />
+      <workItem from="1721210991571" duration="611000" />
+      <workItem from="1721303856917" duration="4627000" />
     </task>
     <task id="LOCAL-00001" summary="created client">
       <option name="closed" value="true" />
