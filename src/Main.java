@@ -162,6 +162,10 @@ public class Main {
                     } else {
                         System.out.println("\n*********** These are the available challenges ***********\n");
                         while (!Objects.equals(response1, "done")) {
+                            //if response1 starts with 'Challenge name' first print a new line
+                            if(response1.startsWith("Challenge name")){
+                                System.out.println("---------------------\n");
+                            }
                             System.out.println(response1);
                             response1 = client.reader.readLine();
                         }
@@ -178,24 +182,36 @@ public class Main {
                     } else {
                         System.out.println("\n*********** These are the available challenges ***********\n");
                         while (!Objects.equals(response1, "done")) {
+                            //if response1 starts with 'Challenge name' first print a new line
+                            if(response1.startsWith("Challenge name")){
+                                System.out.println("---------------------\n");
+                            }
                             System.out.println(response1);
                             response1 = client.reader.readLine();
                         }
-                        System.out.println("\n***********\nEnter a challenge name to attempt\n***********\n");
+                        System.out.println("\nEnter a challenge name to attempt\n***********\n");
                         String challengeName = scanner.nextLine();
 
                         client.printWriter.println(challengeName);
-                        System.out.println("************\n");
                         while(!Objects.equals(response1 = client.reader.readLine(), "done")){
                             if (response1.equalsIgnoreCase("invalid challenge")) {
                                 System.out.println("\nInvalid challenge name\n***********\n");
                                 participant(response);
-                            } else {
-                                System.out.println(response1);
+                            } else if(response1.equalsIgnoreCase("3")){
+                                System.out.println("""
+                                                              ***********
+                                        You have reached the maximum number of attempts for this challenge(3)
+                                                        Please try another challenge
+                                                              ***********
+                                        """);
+                                participant(response);
+                            }else{
+                                    System.out.println(response1);
                             }
                         }
                         choice = startOrBack();
                         if (choice.strip().equalsIgnoreCase("start")) {
+
                             client.printWriter.println("start");
                             System.out.println("\n************");
                             while (!Objects.equals(response1 = client.reader.readLine(), "done")){
